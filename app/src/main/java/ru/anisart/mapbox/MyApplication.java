@@ -55,13 +55,14 @@ public class MyApplication extends Application {
             }
         });
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC );
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY );
         httpClient.addInterceptor(interceptor);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(httpClient.build())
                 .baseUrl("https://api.mapbox.com")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(new CsvConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                         .registerTypeAdapter(Position.class, new PositionDeserializer())
                         .registerTypeAdapter(Geometry.class, new GeometryDeserializer())
