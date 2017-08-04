@@ -20,19 +20,19 @@ public class CsvConverterFactory extends Converter.Factory {
         return CsvConverter.INSTANCE;
     }
 
-    final static class CsvConverter implements Converter<ResponseBody, List<Country>> {
+    final static class CsvConverter implements Converter<ResponseBody, List<OsmObject>> {
         static final CsvConverter INSTANCE = new CsvConverter();
 
 
         @Override
-        public List<Country> convert(ResponseBody value) throws IOException {
-            List<Country> countries = new ArrayList<>();
+        public List<OsmObject> convert(ResponseBody value) throws IOException {
+            List<OsmObject> countries = new ArrayList<>();
             String response = value.string();
             if (response != null) {
                 String[] lines = response.split("\n");
                 for (String line : lines) {
                     String[] data = line.split("\t");
-                    countries.add(new Country(Integer.valueOf(data[0]), data[1]));
+                    countries.add(new OsmObject(Integer.valueOf(data[0]), data[1]));
                 }
             }
             return countries;
